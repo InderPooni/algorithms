@@ -1,0 +1,31 @@
+- hierarchical data structure
+- file systems are trees
+- bst provides moderate search (slower than array, faster than linked list)
+- moderate insertion/deletion (slower than unordered linked list and faster than array)
+- dynamic, nodes are linked through pointers
+
+Applications:
+1. Manipulate hierarchical data
+2. Make information easy to search
+3. Manipulate sorted lists of data. 
+4. As a workflow for compositing digital images for visual effects. 
+5. Router algorithms 
+6. Form of a multi-stage decision-making (see business chess). 
+
+Binary tree has at most 2 children per node
+Top most node is called the root node
+
+Data structure:
+- Data
+- Left pointer
+- Right Pointer
+
+
+Properties:
+- Maximum number of nodes at level x = 2^x
+- The maximum number of nodes in a binary tree of height h: 2^(h+1) -1
+    - height of root is considered 0
+    - Number of nodes 1 + 2 + 4 + 8 + ... + 2^h => 2^h - 1 (Geometric series)
+- In a binary tree with N nodes, the minimum number of levels is Log2(N+1)
+- Binary Tree with L leaves has at least | Log2L? |+ 1 levels 
+- In Binary tree where every node has 0 or 2 children, the number of leaf nodes is always one more than nodes with two children.
