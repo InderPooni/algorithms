@@ -41,18 +41,34 @@ class Graph:
 				self.dfs_driver(visited, neighbor)
 
 
+	# Time complexity: O(V + E) , Space Complexity: O(V)
 	def dfs_iterative(self,s):
-		pass
+		visited = set()
+
+		stack = []
+
+		stack.append(s)
+
+		while stack:
+			node = stack.pop()
+
+			if node not in visited:
+				print(node, end= " ")
+
+				visited.add(node)
+
+			for neighbor in self.graph[node]:
+				if neighbor not in visited:
+					stack.append(neighbor)
 
 
 if __name__ == "__main__":	
 	g = Graph()
-	g.addEdge(0, 1)
+	g.addEdge(1, 0)
 	g.addEdge(0, 2)
-	g.addEdge(1, 2)
-	g.addEdge(2, 0)
-	g.addEdge(2, 3)
-	g.addEdge(3, 3)
+	g.addEdge(2, 1)
+	g.addEdge(0, 3)
+	g.addEdge(1, 4)
 
 
-	g.dfs_recursive(2)
+	g.dfs_iterative(0)
