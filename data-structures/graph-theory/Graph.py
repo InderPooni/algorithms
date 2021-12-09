@@ -1,74 +1,79 @@
-from collections import defaultdict
-from typing import Set
+from collections import defaultdict, deque
+
 
 class Graph:
-	def __init__(self):
+	def __init__(self) -> None:
 		self.graph = defaultdict(list)
-
-	def addEdge(self, u, v):
-		self.graph[u].append(v)
 	
-	def bfs(self, s):
+	def iterative_dfs(self, source):
 		visited = set()
 
-		queue = []
-
-		queue.append(s)
-
-		visited.add(s)
-
-		while queue:
-			v = queue.pop(0)
-
-			print(v, end=" ")
-
-			for i in self.graph[v]:
-				if i not in visited:
-					visited.add(i)
-					queue.append(i)
-
-	def dfs_recursive(self,s):
-		visited = set()
-
-		self.dfs_driver(visited, s)
-	
-	def dfs_driver(self,visited: Set[int], source):
-		if source not in visited:
-			print(source, end=" ")
-			visited.add(source)
-
-			for neighbor in self.graph[source]:
-				self.dfs_driver(visited, neighbor)
-
-
-	# Time complexity: O(V + E) , Space Complexity: O(V)
-	def dfs_iterative(self,s):
-		visited = set()
-
-		stack = []
-
-		stack.append(s)
-
+		stack = deque([source])
+		visited.add(source)
 		while stack:
+
 			node = stack.pop()
 
-			if node not in visited:
-				print(node, end= " ")
+			print(node, end=" ")
 
-				visited.add(node)
+			for neighbor in self.graph[node]:
+				if not neighbor in visited:
+					stack.append(neighbor)
+					visited.add(neighbor)
+				
+	
+	def bfs(self, source):
+		visited = set()
+		q = deque([source])
+		visited.add(source)
+
+		while q:
+			node = q.popleft()
+			print(node, end=" ")
 
 			for neighbor in self.graph[node]:
 				if neighbor not in visited:
-					stack.append(neighbor)
+					q.append(neighbor)
+					visited.add(neighbor)
+	
 
+	def connected_components(self):
+		n = len(self.graph)
+		visited = [False] * (len(self.graph) + 1)
+		connectedComponents = []
 
-if __name__ == "__main__":	
-	g = Graph()
-	g.addEdge(1, 0)
-	g.addEdge(0, 2)
-	g.addEdge(2, 1)
-	g.addEdge(0, 3)
-	g.addEdge(1, 4)
+		for vertex in range(n):
+			if visited[vertex] == False:
+				temp = []
+				connectedComponents.append(self.dfsUtil(temp, vertex, visited))
+		
+		return connectedComponents
+	
+	def dfsUtil(self, temp, vertex, visited):
+		visited[vertex] = True
 
+		temp.append(vertex)
 
-	g.dfs_iterative(0)
+		for neighbor in self.graph[vertex]:
+			if visited[neighbor] == False:
+				temp = self.dfsUtil(temp, neighbor, visited)
+		
+		return temp
+
+	def add_edge(self, source, destination):
+		self.graph[source].append(destination)
+		self.graph[destination].append(source)
+
+	
+if __name__ == "__main__":
+	graph = Graph()
+	graph.graph = defaultdict(list)
+	graph.add_edge(1, 0)
+	graph.add_edge(2, 3)
+	graph.add_edge(3, 4)
+	graph.add_edge(5, 0)
+	connected_components = graph.connected_components()
+
+	print(connected_components)
+
+	
